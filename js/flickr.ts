@@ -1,3 +1,5 @@
+const { Isotope }: any = window;
+
 interface DefOpt {
 	num: number;
 	enableSearch: boolean;
@@ -154,8 +156,19 @@ class MyFlickr {
 			};
 			el.onload = () => {
 				count++;
-				// count === imgs.length && this.isoLayout();
+				count === imgs.length && this.isoLayout();
 			};
 		}
+	}
+
+	isoLayout() {
+		// 클래스 안쪽에서 CDN으로 가져오는 외부 클래스를 호출하면 type 에러 발생
+		// 직접 window 객체에서 해당 데이터를 비구조화 할당으로 가져와 타입 지정
+		new Isotope(this.wrap, {
+			itemSelector: '.item',
+			transitionDuration: '0.5s',
+		});
+		this.wrap?.classList.add('on');
+		this.loading?.classList.add('off');
 	}
 }

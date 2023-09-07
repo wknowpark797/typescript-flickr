@@ -13,6 +13,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _MyFlickr_defOpt;
+const { Isotope } = window;
 class MyFlickr {
     constructor(selector, opt) {
         // 기본값
@@ -123,9 +124,20 @@ class MyFlickr {
             };
             el.onload = () => {
                 count++;
-                // count === imgs.length && this.isoLayout();
+                count === imgs.length && this.isoLayout();
             };
         }
+    }
+    isoLayout() {
+        var _a, _b;
+        // 클래스 안쪽에서 CDN으로 가져오는 외부 클래스를 호출하면 type 에러 발생
+        // 직접 window 객체에서 해당 데이터를 비구조화 할당으로 가져와 타입 지정
+        new Isotope(this.wrap, {
+            itemSelector: '.item',
+            transitionDuration: '0.5s',
+        });
+        (_a = this.wrap) === null || _a === void 0 ? void 0 : _a.classList.add('on');
+        (_b = this.loading) === null || _b === void 0 ? void 0 : _b.classList.add('off');
     }
 }
 _MyFlickr_defOpt = new WeakMap();
