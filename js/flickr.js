@@ -21,6 +21,10 @@ class MyFlickr {
         this.frame = document.querySelector(selector);
         this.wrap = null;
         this.loading = null;
+        this.btnInterest = null;
+        this.btnMine = null;
+        this.input = null;
+        this.btnSearch = null;
         this.opt = Object.assign(Object.assign({}, __classPrivateFieldGet(this, _MyFlickr_defOpt, "f")), opt);
         this.api_key = this.opt.api_key;
         this.myId = this.opt.myId;
@@ -31,8 +35,8 @@ class MyFlickr {
     }
     bindingEvent() {
         this.createInit();
-        // this.enableInterest && this.createBtnSet();
-        // this.enableSearch && this.createSearchBox();
+        this.enableInterest && this.createBtnSet();
+        this.enableSearch && this.createSearchBox();
         this.fecthData(this.setURL('interest'));
     }
     createInit() {
@@ -102,7 +106,7 @@ class MyFlickr {
         `;
         });
         this.wrap && (this.wrap.innerHTML = tags);
-        // this.setLoading();
+        this.setLoading();
         const btnUsers = (_a = this.frame) === null || _a === void 0 ? void 0 : _a.querySelectorAll('.profile .userid');
         const btnThumbs = (_b = this.frame) === null || _b === void 0 ? void 0 : _b.querySelectorAll('.thumb');
         // btnThumbs.forEach((btn) =>
@@ -138,6 +142,42 @@ class MyFlickr {
         });
         (_a = this.wrap) === null || _a === void 0 ? void 0 : _a.classList.add('on');
         (_b = this.loading) === null || _b === void 0 ? void 0 : _b.classList.add('off');
+    }
+    createBtnSet() {
+        var _a, _b, _c;
+        const btnSet = document.createElement('nav');
+        btnSet.classList.add('btnSet');
+        btnSet.innerHTML = `
+      <button class="btnInterest">Interest Gallery</button>
+      <button class="btnMine">My Gallery</button>
+    `;
+        (_a = this.frame) === null || _a === void 0 ? void 0 : _a.prepend(btnSet);
+        this.frame && (this.btnInterest = this.frame.querySelector('.btnInterest'));
+        this.frame && (this.btnMine = this.frame.querySelector('.btnMine'));
+        (_b = this.btnInterest) === null || _b === void 0 ? void 0 : _b.addEventListener('click', () => this.fecthData(this.setURL('interest')));
+        (_c = this.btnMine) === null || _c === void 0 ? void 0 : _c.addEventListener('click', () => this.fecthData(this.setURL('user', this.myId)));
+    }
+    createSearchBox() {
+        var _a, _b, _c;
+        const searchBox = document.createElement('div');
+        searchBox.classList.add('searchBox');
+        searchBox.innerHTML = `    
+      <input type="text" id="search" placeholder="검색어 입력">
+      <button class="btnSearch">Search</button>
+    `;
+        (_a = this.frame) === null || _a === void 0 ? void 0 : _a.prepend(searchBox);
+        this.frame && (this.input = this.frame.querySelector('#search'));
+        this.frame && (this.btnSearch = this.frame.querySelector('.btnSearch'));
+        (_b = this.btnSearch) === null || _b === void 0 ? void 0 : _b.addEventListener('click', () => this.getSearch());
+        (_c = this.input) === null || _c === void 0 ? void 0 : _c.addEventListener('keypress', (e) => e.code === 'Enter' && this.getSearch());
+    }
+    getSearch() {
+        var _a;
+        const value = (_a = this.input) === null || _a === void 0 ? void 0 : _a.value.trim();
+        this.input && (this.input.value = '');
+        if (value === '')
+            return alert('검색어를 입력해주세요.');
+        this.fecthData(this.setURL('search', value));
     }
 }
 _MyFlickr_defOpt = new WeakMap();

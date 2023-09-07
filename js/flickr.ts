@@ -38,11 +38,19 @@ class MyFlickr {
 	enableInterest: boolean;
 	wrap: HTMLElement | null;
 	loading: HTMLImageElement | null;
+	btnInterest: HTMLButtonElement | null;
+	btnMine: HTMLButtonElement | null;
+	input: HTMLInputElement | null;
+	btnSearch: HTMLButtonElement | null;
 
 	constructor(selector: string, opt: Opt) {
 		this.frame = document.querySelector(selector);
 		this.wrap = null;
 		this.loading = null;
+		this.btnInterest = null;
+		this.btnMine = null;
+		this.input = null;
+		this.btnSearch = null;
 		this.opt = { ...this.#defOpt, ...opt };
 		this.api_key = this.opt.api_key;
 		this.myId = this.opt.myId;
@@ -54,8 +62,8 @@ class MyFlickr {
 
 	bindingEvent() {
 		this.createInit();
-		// this.enableInterest && this.createBtnSet();
-		// this.enableSearch && this.createSearchBox();
+		this.enableInterest && this.createBtnSet();
+		this.enableSearch && this.createSearchBox();
 		this.fecthData(this.setURL('interest'));
 	}
 
@@ -132,7 +140,7 @@ class MyFlickr {
 		});
 		this.wrap && (this.wrap.innerHTML = tags);
 
-		// this.setLoading();
+		this.setLoading();
 
 		const btnUsers = this.frame?.querySelectorAll('.profile .userid');
 		const btnThumbs = this.frame?.querySelectorAll('.thumb');
@@ -147,7 +155,8 @@ class MyFlickr {
 	setLoading() {
 		// imgs 반복문이 실행되므로 처음 값이 없을 때 빈배열을 넘겨준다.
 		// 노드리스트 타입 지정 - NodeListOf<HTMLImageElement>
-		const imgs: NodeListOf<HTMLImageElement> | [] = this.wrap?.querySelectorAll('img') || [];
+		const imgs: NodeListOf<HTMLImageElement> | [] =
+			this.wrap?.querySelectorAll<HTMLImageElement>('img') || [];
 		let count = 0;
 
 		for (const el of imgs) {
@@ -170,5 +179,41 @@ class MyFlickr {
 		});
 		this.wrap?.classList.add('on');
 		this.loading?.classList.add('off');
+	}
+
+	createBtnSet() {
+		const btnSet = document.createElement('nav');
+		btnSet.classList.add('btnSet');
+		btnSet.innerHTML = `
+      <button class="btnInterest">Interest Gallery</button>
+      <button class="btnMine">My Gallery</button>
+    `;
+		this.frame?.prepend(btnSet);
+		this.frame && (this.btnInterest = this.frame.querySelector('.btnInterest'));
+		this.frame && (this.btnMine = this.frame.querySelector('.btnMine'));
+		this.btnInterest?.addEventListener('click', () => this.fecthData(this.setURL('interest')));
+		this.btnMine?.addEventListener('click', () => this.fecthData(this.setURL('user', this.myId)));
+	}
+
+	createSearchBox() {
+		const searchBox = document.createElement('div');
+		searchBox.classList.add('searchBox');
+		searchBox.innerHTML = `    
+      <input type="text" id="search" placeholder="검색어 입력">
+      <button class="btnSearch">Search</button>
+    `;
+
+		this.frame?.prepend(searchBox);
+		this.frame && (this.input = this.frame.querySelector('#search'));
+		this.frame && (this.btnSearch = this.frame.querySelector('.btnSearch'));
+		this.btnSearch?.addEventListener('click', () => this.getSearch());
+		this.input?.addEventListener('keypress', (e) => e.code === 'Enter' && this.getSearch());
+	}
+
+	getSearch() {
+		const value = this.input?.value.trim();
+		this.input && (this.input.value = '');
+		if (value === '') return alert('검색어를 입력해주세요.');
+		this.fecthData(this.setURL('search', value));
 	}
 }
