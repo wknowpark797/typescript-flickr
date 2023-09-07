@@ -64,7 +64,7 @@ class MyFlickr {
 		this.createInit();
 		this.enableInterest && this.createBtnSet();
 		this.enableSearch && this.createSearchBox();
-		this.fecthData(this.setURL('interest'));
+		this.fecthData(this.setURL('user', this.myId));
 	}
 
 	createInit() {
@@ -123,15 +123,11 @@ class MyFlickr {
             <div>           
               <img class='thumb' src='https://live.staticflickr.com/${item.server}/${item.id}_${
 				item.secret
-			}_m.jpg' alt='https://live.staticflickr.com/${item.server}/${item.id}_${
-				item.secret
-			}_b.jpg' />          
+			}_m.jpg' alt='https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_b.jpg' />          
               <p>${item.title === '' ? 'Have a good day!!' : item.title}</p>
   
               <article class='profile'>	
-                <img src='http://farm${item.farm}.staticflickr.com/${item.server}/buddyicons/${
-				item.owner
-			}.jpg' />				
+                <img src='http://farm${item.farm}.staticflickr.com/${item.server}/buddyicons/${item.owner}.jpg' />				
                 <span class='userid'>${item.owner}</span>
               </article>
             </div>
@@ -142,21 +138,28 @@ class MyFlickr {
 
 		this.setLoading();
 
-		const btnUsers = this.frame?.querySelectorAll('.profile .userid');
-		const btnThumbs = this.frame?.querySelectorAll('.thumb');
-		// btnThumbs.forEach((btn) =>
-		// 	btn.addEventListener('click', (e) => this.createPop(e.target.getAttribute('alt')))
-		// );
-		// btnUsers.forEach((btn) =>
-		// 	btn.addEventListener('click', (e) => this.fecthData(this.setURL('user', e.target.innerText)))
-		// );
+		const btnUsers = this.frame?.querySelectorAll('.profile .userid') as NodeListOf<HTMLSpanElement> | [];
+		const btnThumbs = this.frame?.querySelectorAll('.thumb') as NodeListOf<HTMLImageElement> | [];
+
+		btnThumbs.forEach((btn) =>
+			btn.addEventListener('click', (e: Event) => {
+				// 타입스크립트에서는 e.target의 속성을 읽지 못하기 때문에 직접 HTMLElement타입을 지정한 객체를 변수로 옮겨담아서 호출한다.
+				const eventTarget = e.target as HTMLElement;
+				this.createPop(eventTarget.getAttribute('alt'));
+			})
+		);
+		btnUsers.forEach((btn) =>
+			btn.addEventListener('click', (e: Event) => {
+				const eventTarget = e.target as HTMLElement;
+				this.fecthData(this.setURL('user', eventTarget.innerText));
+			})
+		);
 	}
 
 	setLoading() {
 		// imgs 반복문이 실행되므로 처음 값이 없을 때 빈배열을 넘겨준다.
 		// 노드리스트 타입 지정 - NodeListOf<HTMLImageElement>
-		const imgs: NodeListOf<HTMLImageElement> | [] =
-			this.wrap?.querySelectorAll<HTMLImageElement>('img') || [];
+		const imgs: NodeListOf<HTMLImageElement> | [] = this.wrap?.querySelectorAll<HTMLImageElement>('img') || [];
 		let count = 0;
 
 		for (const el of imgs) {
@@ -215,5 +218,32 @@ class MyFlickr {
 		this.input && (this.input.value = '');
 		if (value === '') return alert('검색어를 입력해주세요.');
 		this.fecthData(this.setURL('search', value));
+	}
+
+	createPop(url: string | null) {
+		document.body.style.overflow = 'hidden';
+		const aside = document.createElement('aside');
+		aside.className = 'pop';
+		const tags = `
+      <div class='con'>
+        <img src='${url}' />
+      </div>
+  
+      <span class='close'>close</span>
+    `;
+		aside.innerHTML = tags;
+		document.body.append(aside);
+		const btnClose = document.querySelector('.pop .close');
+		btnClose?.addEventListener('click', () => this.removePop());
+		setTimeout(() => document.querySelector('.pop')?.classList.add('on'), 0);
+	}
+
+	removePop() {
+		document.body.style.overflow = 'auto';
+		const pop = document.querySelector('.pop');
+		pop?.classList.remove('on');
+		setTimeout(() => {
+			pop?.remove();
+		}, 1000);
 	}
 }
