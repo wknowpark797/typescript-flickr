@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://kit.fontawesome.com/1d8113f26b.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
+  <script src="js/myFlickr.js"></script>
+</head>
+
+<body>
+  <section class="gallery">
+
+  </section>
+
+
+
+  <script>
+    new MyFlickr('.gallery', {
+      api_key: 'ae5dbef0587895ed38171fcda4afb648', //flicr api key (필수항목)
+      num: 50, //데이터 출력 갯수 (최대 500개)
+      myId: '164021883@N04', // 내계정 아이디 (필수 항목)
+      enableSearch: true, //true: 검색창 자동 생성 및 검색기능 활성화, false: 비활성화
+      enableInterest: true //true: InterestGallery보기 버튼 생성 및 기능 활성화, false: 비활성화
+    });
+
+  </script>
+
+
+</body>
+
+</html>

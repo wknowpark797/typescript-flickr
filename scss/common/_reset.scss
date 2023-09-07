@@ -1,0 +1,31 @@
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+}
+ul,
+ol,
+li {
+	list-style: none;
+}
+a {
+	text-decoration: none;
+}
+body {
+	background: #efefef;
+}
+fieldset {
+	border: none;
+}
+table {
+	border-collapse: collapse;
+}
+input,
+label {
+	vertical-align: middle;
+}
+.h {
+	position: absolute;
+	top: -99999px;
+	opacity: 0;
+}

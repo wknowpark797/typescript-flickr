@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+
+.gallery {
+	width: 80%;
+	margin: 0px 10%;
+
+	.loading {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		opacity: 1;
+		transition: opacity 1s;
+		z-index: 3;
+
+		&.off {
+			opacity: 0;
+			z-index: -1;
+		}
+	}
+
+	.searchBox {
+		width: 100%;
+		padding: 100px 10px 20px;
+		font-size: 0;
+
+		input {
+			width: 260px;
+			height: 30px;
+			background: #fff;
+			border: 1px solid #ddd;
+			padding-left: 10px;
+		}
+		.btnSearch {
+			width: 80px;
+			height: 29px;
+			background: #333;
+			color: #fff;
+			font: bold 12px/29px 'arial';
+			text-align: center;
+			border: none;
+			cursor: pointer;
+			margin-left: 5px;
+			transform: translateY(-1px);
+		}
+	}
+
+	.wrap {
+		opacity: 0;
+		transform: translateY(100px);
+		transition: 1s;
+
+		&.on {
+			opacity: 1;
+			transform: translateY(0px);
+		}
+
+		&::after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+		li {
+			width: calc(100% / 4);
+			float: left;
+			padding: 10px;
+
+			> div {
+				width: 100%;
+				background: #fff;
+				padding: 10px;
+				box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.05);
+
+				.thumb {
+					width: 100%;
+				}
+
+				p {
+					font: 18px/1.2 'Architects daughter';
+					color: #777;
+					margin-top: 10px;
+					margin-bottom: 20px;
+				}
+				.profile {
+					width: 100%;
+
+					img {
+						width: 36px;
+					}
+					span {
+						display: inline-block;
+						font: 12px/1 'arial';
+						color: orange;
+						margin-left: 5px;
+						transform: translateY(-10px);
+					}
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: $tablet) {
+	.gallery {
+		.wrap {
+			li {
+				width: calc(100% / 2);
+			}
+		}
+	}
+}
+
+@media screen and (max-width: $mobile) {
+	.gallery {
+		.wrap {
+			li {
+				width: calc(100% / 1);
+			}
+		}
+	}
+}

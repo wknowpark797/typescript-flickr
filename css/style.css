@@ -1,0 +1,177 @@
+@import url("https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap");
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+ul,
+ol,
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  background: #efefef;
+}
+
+fieldset {
+  border: none;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+input,
+label {
+  vertical-align: middle;
+}
+
+.h {
+  position: absolute;
+  top: -99999px;
+  opacity: 0;
+}
+
+.pop {
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  position: fixed;
+  top: 0;
+  left: 0px;
+  padding: 100px;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 1s;
+}
+.pop.on {
+  opacity: 1;
+}
+.pop .con {
+  width: 100%;
+  height: 100%;
+}
+.pop .con iframe,
+.pop .con video,
+.pop .con img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+}
+.pop .close {
+  font: bold 14px/1 "arial";
+  color: #fff;
+  position: absolute;
+  top: 30px;
+  right: 50px;
+  cursor: pointer;
+}
+
+.gallery {
+  width: 80%;
+  margin: 0px 10%;
+}
+.gallery .loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  transition: opacity 1s;
+  z-index: 3;
+}
+.gallery .loading.off {
+  opacity: 0;
+  z-index: -1;
+}
+.gallery .searchBox {
+  width: 100%;
+  padding: 100px 10px 20px;
+  font-size: 0;
+}
+.gallery .searchBox input {
+  width: 260px;
+  height: 30px;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding-left: 10px;
+}
+.gallery .searchBox .btnSearch {
+  width: 80px;
+  height: 29px;
+  background: #333;
+  color: #fff;
+  font: bold 12px/29px "arial";
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  margin-left: 5px;
+  transform: translateY(-1px);
+}
+.gallery .wrap {
+  opacity: 0;
+  transform: translateY(100px);
+  transition: 1s;
+}
+.gallery .wrap.on {
+  opacity: 1;
+  transform: translateY(0px);
+}
+.gallery .wrap::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.gallery .wrap li {
+  width: 25%;
+  float: left;
+  padding: 10px;
+}
+.gallery .wrap li > div {
+  width: 100%;
+  background: #fff;
+  padding: 10px;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.05);
+}
+.gallery .wrap li > div .thumb {
+  width: 100%;
+}
+.gallery .wrap li > div p {
+  font: 18px/1.2 "Architects daughter";
+  color: #777;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+.gallery .wrap li > div .profile {
+  width: 100%;
+}
+.gallery .wrap li > div .profile img {
+  width: 36px;
+}
+.gallery .wrap li > div .profile span {
+  display: inline-block;
+  font: 12px/1 "arial";
+  color: orange;
+  margin-left: 5px;
+  transform: translateY(-10px);
+}
+
+@media screen and (max-width: 999px) {
+  .gallery .wrap li {
+    width: 50%;
+  }
+}
+@media screen and (max-width: 639px) {
+  .gallery .wrap li {
+    width: 100%;
+  }
+}
+
+/*# sourceMappingURL=style.css.map */
