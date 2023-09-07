@@ -141,4 +141,21 @@ class MyFlickr {
 		// 	btn.addEventListener('click', (e) => this.fecthData(this.setURL('user', e.target.innerText)))
 		// );
 	}
+
+	setLoading() {
+		// imgs 반복문이 실행되므로 처음 값이 없을 때 빈배열을 넘겨준다.
+		// 노드리스트 타입 지정 - NodeListOf<HTMLImageElement>
+		const imgs: NodeListOf<HTMLImageElement> | [] = this.wrap?.querySelectorAll('img') || [];
+		let count = 0;
+
+		for (const el of imgs) {
+			el.onerror = () => {
+				el.setAttribute('src', 'https://www.flickr.com/images/buddyicon.gif');
+			};
+			el.onload = () => {
+				count++;
+				// count === imgs.length && this.isoLayout();
+			};
+		}
+	}
 }
