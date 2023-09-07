@@ -9,17 +9,28 @@
   <link rel="stylesheet" href="css/style.css">
   <script src="https://kit.fontawesome.com/1d8113f26b.js" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
-  <script src="js/myFlickr.js"></script>
+  <!-- <script src="js/myFlickr.js"></script> -->
+  <script src="js/flickr.js"></script>
+  <style>
+    .box {
+      width: 100px;
+      height: 100px;
+      background: gray;
+    }
+  </style>
 </head>
 
 <body>
   <section class="gallery">
-
+    <div class="box"></div>
   </section>
 
 
 
   <script>
+    new ChangeColor('.box', 'red');
+
+    /*
     new MyFlickr('.gallery', {
       api_key: 'ae5dbef0587895ed38171fcda4afb648', //flicr api key (필수항목)
       num: 50, //데이터 출력 갯수 (최대 500개)
@@ -27,6 +38,7 @@
       enableSearch: true, //true: 검색창 자동 생성 및 검색기능 활성화, false: 비활성화
       enableInterest: true //true: InterestGallery보기 버튼 생성 및 기능 활성화, false: 비활성화
     });
+    */
 
   </script>
 
