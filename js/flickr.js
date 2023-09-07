@@ -78,7 +78,38 @@ class MyFlickr {
                 (_d = this.wrap) === null || _d === void 0 ? void 0 : _d.classList.add('on');
                 return alert('해당 검색어의 결과이미지가 없습니다.');
             }
+            console.log('items: ', items);
+            this.createList(items);
         });
+    }
+    createList(arr) {
+        var _a, _b;
+        let tags = '';
+        arr.forEach((item) => {
+            tags += `
+          <li class='item'>
+            <div>           
+              <img class='thumb' src='https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_m.jpg' alt='https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_b.jpg' />          
+              <p>${item.title === '' ? 'Have a good day!!' : item.title}</p>
+  
+              <article class='profile'>	
+                <img src='http://farm${item.farm}.staticflickr.com/${item.server}/buddyicons/${item.owner}.jpg' />				
+                <span class='userid'>${item.owner}</span>
+              </article>
+            </div>
+          </li>
+        `;
+        });
+        this.wrap && (this.wrap.innerHTML = tags);
+        // this.setLoading();
+        const btnUsers = (_a = this.frame) === null || _a === void 0 ? void 0 : _a.querySelectorAll('.profile .userid');
+        const btnThumbs = (_b = this.frame) === null || _b === void 0 ? void 0 : _b.querySelectorAll('.thumb');
+        // btnThumbs.forEach((btn) =>
+        // 	btn.addEventListener('click', (e) => this.createPop(e.target.getAttribute('alt')))
+        // );
+        // btnUsers.forEach((btn) =>
+        // 	btn.addEventListener('click', (e) => this.fecthData(this.setURL('user', e.target.innerText)))
+        // );
     }
 }
 _MyFlickr_defOpt = new WeakMap();

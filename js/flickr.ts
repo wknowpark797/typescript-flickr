@@ -10,6 +10,17 @@ interface Opt {
 	enableSearch: boolean;
 	enableInterest: boolean;
 }
+interface Data {
+	farm: number;
+	id: string;
+	isfamily: number;
+	isfriend: number;
+	ispublic: number;
+	owner: string;
+	secret: string;
+	server: string;
+	title: string;
+}
 
 class MyFlickr {
 	// 기본값
@@ -89,6 +100,45 @@ class MyFlickr {
 			this.wrap?.classList.add('on');
 			return alert('해당 검색어의 결과이미지가 없습니다.');
 		}
-		// this.createList(items);
+		console.log('items: ', items);
+		this.createList(items);
+	}
+
+	createList(arr: Data[]) {
+		let tags = '';
+
+		arr.forEach((item) => {
+			tags += `
+          <li class='item'>
+            <div>           
+              <img class='thumb' src='https://live.staticflickr.com/${item.server}/${item.id}_${
+				item.secret
+			}_m.jpg' alt='https://live.staticflickr.com/${item.server}/${item.id}_${
+				item.secret
+			}_b.jpg' />          
+              <p>${item.title === '' ? 'Have a good day!!' : item.title}</p>
+  
+              <article class='profile'>	
+                <img src='http://farm${item.farm}.staticflickr.com/${item.server}/buddyicons/${
+				item.owner
+			}.jpg' />				
+                <span class='userid'>${item.owner}</span>
+              </article>
+            </div>
+          </li>
+        `;
+		});
+		this.wrap && (this.wrap.innerHTML = tags);
+
+		// this.setLoading();
+
+		const btnUsers = this.frame?.querySelectorAll('.profile .userid');
+		const btnThumbs = this.frame?.querySelectorAll('.thumb');
+		// btnThumbs.forEach((btn) =>
+		// 	btn.addEventListener('click', (e) => this.createPop(e.target.getAttribute('alt')))
+		// );
+		// btnUsers.forEach((btn) =>
+		// 	btn.addEventListener('click', (e) => this.fecthData(this.setURL('user', e.target.innerText)))
+		// );
 	}
 }
